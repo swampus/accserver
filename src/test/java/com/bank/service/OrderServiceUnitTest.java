@@ -38,6 +38,11 @@ public class OrderServiceUnitTest extends BankTest {
     }
 
     @Test
+    public void findMissingPaymentOrdersInBlock(){
+        fail();
+    }
+
+    @Test
     public void createExecutionInstructions() {
         List<PaymentOrder> completedPaymentBlock = new ArrayList<>();
 

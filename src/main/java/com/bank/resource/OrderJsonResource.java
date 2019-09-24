@@ -2,7 +2,9 @@ package com.bank.resource;
 
 import com.bank.model.json.ExecutedOrder;
 import com.bank.model.json.PaymentOrder;
+import com.bank.model.json.RequestPaymentOrder;
 import io.jsondb.JsonDBTemplate;
+import sun.misc.Request;
 
 import java.util.HashSet;
 import java.util.List;
@@ -36,6 +38,16 @@ public class OrderJsonResource {
                 .getCollection(PaymentOrder.class)
                 .stream().anyMatch((PaymentOrder paymentOrder) -> paymentOrder.getPaymentOrderId()
                         .equals(paymentOrderId));
+    }
+
+    public void addAllRequestPaymentOrders(List<RequestPaymentOrder> requestPaymentOrders){
+        requestPaymentOrders.forEach((RequestPaymentOrder requestPaymentOrder)
+                -> jsonDBTemplate.insert(requestPaymentOrder));
+    }
+
+    public void addAllExecutedOrderPaymentOrders(List<ExecutedOrder> executedOrders){
+        executedOrders.forEach((ExecutedOrder executedOrder)
+                -> jsonDBTemplate.insert(executedOrder));
     }
 
     public List<PaymentOrder> getPaymentOrderExecutableBlock(PaymentOrder paymentOrder) {

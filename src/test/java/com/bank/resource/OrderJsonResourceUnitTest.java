@@ -4,6 +4,7 @@ import com.bank.BankTest;
 import com.bank.model.json.ExecutedOrder;
 import com.bank.model.json.OrderPacketHeader;
 import com.bank.model.json.PaymentOrder;
+import com.bank.model.json.RequestPaymentOrder;
 import com.google.common.collect.ImmutableList;
 import io.jsondb.JsonDBTemplate;
 import org.junit.Before;
@@ -49,6 +50,33 @@ public class OrderJsonResourceUnitTest extends BankTest {
         verify(jsonDBTemplate, times(1)).insert(executedOrder);
         verifyNoMoreInteractions(jsonDBTemplate);
     }
+
+    @Test
+    public void addAllRequestPaymentOrders() {
+        RequestPaymentOrder requestPaymentOrder1 = new RequestPaymentOrder();
+        RequestPaymentOrder requestPaymentOrder2 = new RequestPaymentOrder();
+        List<RequestPaymentOrder> paymentOrders = ImmutableList.of(requestPaymentOrder1, requestPaymentOrder2);
+
+        orderJsonResource.addAllRequestPaymentOrders(paymentOrders);
+        verify(jsonDBTemplate, times(1)).insert(requestPaymentOrder1);
+        verify(jsonDBTemplate, times(1)).insert(requestPaymentOrder2);
+
+        verifyNoMoreInteractions(jsonDBTemplate);
+    }
+
+    @Test
+    public void addAllExecutedOrderPaymentOrders() {
+        ExecutedOrder executedOrder1 = new ExecutedOrder();
+        ExecutedOrder executedOrder2 = new ExecutedOrder();
+        List<ExecutedOrder> executedOrders = ImmutableList.of(executedOrder1, executedOrder2);
+
+        orderJsonResource.addAllExecutedOrderPaymentOrders(executedOrders);
+        verify(jsonDBTemplate, times(1)).insert(executedOrder1);
+        verify(jsonDBTemplate, times(1)).insert(executedOrder2);
+
+        verifyNoMoreInteractions(jsonDBTemplate);
+    }
+
 
     @Test
     public void getExecutedOrders() {
@@ -112,7 +140,7 @@ public class OrderJsonResourceUnitTest extends BankTest {
         orderPacketHeaderForOtherPayment.setPacketHeaderId("123");
 
 
-        PaymentOrder paymentOrder1 = createPaymentOrder("1", orderPacketHeader,"01");
+        PaymentOrder paymentOrder1 = createPaymentOrder("1", orderPacketHeader, "01");
         PaymentOrder paymentOrder2 = createPaymentOrder("2", orderPacketHeader, "02");
 
         PaymentOrder paymentOrder2SameId = createPaymentOrder("2", orderPacketHeaderForOtherPayment, "03");

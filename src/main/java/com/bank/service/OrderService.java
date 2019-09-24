@@ -1,6 +1,7 @@
 package com.bank.service;
 
 import com.bank.model.json.PaymentOrder;
+import com.bank.model.json.RequestPaymentOrder;
 import com.bank.resource.OrderJsonResource;
 import com.bank.resource.OrderH2Resource;
 import com.google.common.annotations.VisibleForTesting;
@@ -29,12 +30,12 @@ public class OrderService {
     public void processPaymentOrderRecieved(PaymentOrder paymentOrder) {
         List<PaymentOrder> executableBlock = orderJsonResource.getPaymentOrderExecutableBlock(paymentOrder);
         if (isPaymentBlockComplete(executableBlock)) {
-            Map<String, Money> instructions = createExecutionInstructions(executableBlock);
+            createExecutionInstructions(executableBlock).forEach((accNumber, money)
+                    -> orderH2Resource.updateAccountBalance(accNumber, money));
+           // orderJsonResource.addAllExecutedOrderPaymentOrders(executableBlock);
         }else{
-            //return
+            orderJsonResource.addAllRequestPaymentOrders(findMissingPaymentOrdersInBlock(executableBlock));
         }
-
-
     }
 
     private Boolean isPaymentBlockComplete(List<PaymentOrder> paymentOrders) {
@@ -54,6 +55,14 @@ public class OrderService {
             }
         });
         return instructions;
+    }
+
+    @VisibleForTesting
+    List<RequestPaymentOrder> findMissingPaymentOrdersInBlock(List<PaymentOrder> paymentOrderBlock){
+        paymentOrderBlock.stream().map((PaymentOrder paymentOrder) -> {
+            return null;
+        });
+        return null;
     }
 
     private Money createMoney(String amount, String currency) {
