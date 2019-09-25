@@ -49,6 +49,10 @@ public class OrderJsonResource {
                 -> jsonDBTemplate.insert(executedOrder));
     }
 
+    public void addPaymentOrder(PaymentOrder paymentOrder) {
+        jsonDBTemplate.insert(paymentOrder);
+    }
+
     public List<PaymentOrder> getPaymentOrderExecutableBlock(PaymentOrder paymentOrder) {
         List<PaymentOrder> paymentOrders = jsonDBTemplate
                 .getCollection(PaymentOrder.class)

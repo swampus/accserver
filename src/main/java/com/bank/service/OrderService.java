@@ -49,6 +49,7 @@ public class OrderService {
                     -> orderH2Resource.updateAccountBalance(accNumber, money));
             orderJsonResource.addAllExecutedOrderPaymentOrders(createAllExecutedOrderList(executableBlock));
         } else {
+            orderJsonResource.addPaymentOrder(paymentOrder);
             orderJsonResource.addAllRequestPaymentOrders(findMissingPaymentOrdersInBlock(executableBlock));
         }
     }

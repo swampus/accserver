@@ -13,9 +13,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import io.jsondb.JsonDBTemplate;
 import org.junit.ClassRule;
 import org.junit.Test;
 import spark.servlet.SparkApplication;
+
+import javax.persistence.EntityManager;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -36,14 +39,9 @@ public class OrderControllerIntegrationTest {
             = new SparkServer<>(OrderControllerIntegrationTest.OrderControllerTestSparkApplication.class, 4567);
 
     @Test
-    public void test() throws Exception {
-        testServer.get("/init_data", false);
-
-
-    }
-
-    @Test
     public void testSinglePaymentInBlockChangeBalance() throws JsonProcessingException, HttpClientException {
+        cleanUP();
+
         OrderPacketHeader orderPacketHeader = new OrderPacketHeader();
         orderPacketHeader.setPacketHeaderId("Header1");
         orderPacketHeader.setOrderQuantity(1);
@@ -58,8 +56,6 @@ public class OrderControllerIntegrationTest {
         paymentOrder.setOrderPriority(OrderPriority.HIGH);
         paymentOrder.setOrderPacketHeader(orderPacketHeader);
 
-
-        testServer.execute(testServer.get("/init_data", false));
 
         PutMethod putMethod = testServer.put("/add_payment", new ObjectMapper().writeValueAsString(paymentOrder), false);
         HttpResponse httpResponse = testServer.execute(putMethod);
@@ -76,6 +72,8 @@ public class OrderControllerIntegrationTest {
 
     @Test
     public void testTwoPaymentInBlockChangeBalance() throws JsonProcessingException, HttpClientException {
+        cleanUP();
+
         OrderPacketHeader orderPacketHeader = new OrderPacketHeader();
         orderPacketHeader.setPacketHeaderId("HeaderForTwo");
         orderPacketHeader.setOrderQuantity(2);
@@ -91,16 +89,14 @@ public class OrderControllerIntegrationTest {
         paymentOrder.setOrderPacketHeader(orderPacketHeader);
 
         PaymentOrder paymentOrder2 = new PaymentOrder();
-        paymentOrder.setMoneyCurrency("EUR");
-        paymentOrder.setOrderPositionInPacket("2");
-        paymentOrder.setMoneyAmount("100");
-        paymentOrder.setAccount("HABA0102030405");
-        paymentOrder.setCurrentTimestamp(String.valueOf(System.currentTimeMillis()));
-        paymentOrder.setPaymentOrderId("TWO_2");
-        paymentOrder.setOrderPriority(OrderPriority.HIGH);
-        paymentOrder.setOrderPacketHeader(orderPacketHeader);
-
-        testServer.execute(testServer.get("/init_data", false));
+        paymentOrder2.setMoneyCurrency("USD");
+        paymentOrder2.setOrderPositionInPacket("2");
+        paymentOrder2.setMoneyAmount("-120");
+        paymentOrder2.setAccount("PARX0102030405");
+        paymentOrder2.setCurrentTimestamp(String.valueOf(System.currentTimeMillis()));
+        paymentOrder2.setPaymentOrderId("TWO_2");
+        paymentOrder2.setOrderPriority(OrderPriority.HIGH);
+        paymentOrder2.setOrderPacketHeader(orderPacketHeader);
 
         PutMethod putMethod = testServer.put("/add_payment", new ObjectMapper().writeValueAsString(paymentOrder), false);
         HttpResponse httpResponse = testServer.execute(putMethod);
@@ -114,9 +110,20 @@ public class OrderControllerIntegrationTest {
 
         GetMethod getMethod = testServer.get("/accounts", false);
         httpResponse = testServer.execute(getMethod);
-        assertEquals("[{\"account_number\":\"HABA0102030405\",\"money_amount\":\"1001\","
-                + "\"money_currency\":\"EUR\"},{\"account_number\":\"PARX0102030405\",\"money_amount\":\"100\","
+        assertEquals("[{\"account_number\":\"HABA0102030405\",\"money_amount\":\"101\","
+                + "\"money_currency\":\"EUR\"},{\"account_number\":\"PARX0102030405\",\"money_amount\":\"-20\","
                 + "\"money_currency\":\"USD\"}]", new String(httpResponse.body()));
+    }
+
+    private void cleanUP() throws HttpClientException {
+        Injector injector = Guice.createInjector(new ApplicationTestModule());
+        EntityManager em = injector.getInstance(EntityManager.class);
+        JsonDBTemplate jsonDBTemplate = injector.getInstance(JsonDBTemplate.class);
+        jsonDBTemplate.reLoadDB();
+        em.getTransaction().begin();
+        em.createQuery("DELETE FROM account ").executeUpdate();
+        em.getTransaction().commit();
+        testServer.execute(testServer.get("/init_data", false));
     }
 
 

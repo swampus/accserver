@@ -96,16 +96,4 @@ public class PaymentOrder {
         this.orderPriority = orderPriority;
     }
 
-    @Override
-    public String toString() {
-        return "PaymentOrder{" +
-                "paymentOrderId='" + paymentOrderId + '\'' +
-                ", orderPacketHeader=" + orderPacketHeader +
-                ", account='" + account + '\'' +
-                ", moneyAmount='" + moneyAmount + '\'' +
-                ", moneyCurrency='" + moneyCurrency + '\'' +
-                ", orderPriority=" + orderPriority +
-                ", currentTimestamp='" + currentTimestamp + '\'' +
-                '}';
-    }
 }

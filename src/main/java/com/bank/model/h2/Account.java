@@ -53,12 +53,4 @@ public class Account implements Serializable {
         this.balance = balance;
     }
 
-    @Override
-    public String toString() {
-        return "Account{" +
-                "id=" + id +
-                ", accNumber='" + accNumber + '\'' +
-                ", balance=" + balance +
-                '}';
-    }
 }

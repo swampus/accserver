@@ -35,11 +35,4 @@ public class OrderPacketHeader {
         return packetHeaderId;
     }
 
-    @Override
-    public String toString() {
-        return "OrderPacketHeader{" +
-                "packetHeaderId='" + packetHeaderId + '\'' +
-                ", orderQuantity=" + orderQuantity +
-                '}';
-    }
 }

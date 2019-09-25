@@ -8,6 +8,7 @@ import java.util.List;
 
 public class BankSystemInitData {
     public static List<Account> initAccountsData() {
+
         Account account = new Account();
         account.setBalance(Money.of(1, "EUR"));
         account.setAccNumber("HABA0102030405");
