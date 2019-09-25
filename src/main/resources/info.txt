@@ -1,1 +1,53 @@
-mvn exec:java -Dexec.mainClass="com.bank.handler.HellowWourld"
+mvn exec:java -Dexec.mainClass="com.bank.BankApplication"
+OR
+java -jar <jar name> (from target)
+
+http://localhost:4567/init_data
+
+http://localhost:4567/add_payment
+EXAMPLES:
+/ad
+//1
+{
+   "payment_order_id":"1",
+   "order_packet_header":{
+      "packet_header_id":"Header1",
+      "order_quantity":1
+   },
+   "order_position_in_packet":"1",
+   "account":"HABA0102030405",
+   "money_amount":"1000",
+   "money_currency":"EUR",
+   "order_priority":"HIGH",
+   "current_timestamp":"1569442896543"
+}
+
+//2
+{
+   "payment_order_id":"A1",
+   "order_packet_header":{
+      "packet_header_id":"Header_2",
+      "order_quantity":2
+   },
+   "order_position_in_packet":"1",
+   "account":"HABA0102030405",
+   "money_amount":"1220",
+   "money_currency":"EUR",
+   "order_priority":"HIGH",
+   "current_timestamp":"1569442896543"
+}
+
+//3
+{
+   "payment_order_id":"A2",
+   "order_packet_header":{
+      "packet_header_id":"Header_2",
+      "order_quantity":2
+   },
+   "order_position_in_packet":"2",
+   "account":"HABA0102030405",
+   "money_amount":"-20",
+   "money_currency":"EUR",
+   "order_priority":"HIGH",
+   "current_timestamp":"1569442896543"
+}

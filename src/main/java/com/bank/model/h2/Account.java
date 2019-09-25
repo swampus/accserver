@@ -1,6 +1,5 @@
 package com.bank.model.h2;
 
-import org.eclipse.persistence.config.PessimisticLock;
 import org.javamoney.moneta.Money;
 
 import javax.persistence.*;

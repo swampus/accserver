@@ -3,7 +3,6 @@ package com.bank.resource;
 import com.bank.model.h2.Account;
 import org.javamoney.moneta.Money;
 
-import javax.jdo.annotations.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.TypedQuery;
@@ -22,7 +21,6 @@ public class OrderH2Resource {
         this.entityManager = entityManager;
     }
 
-    @Transactional
     public Boolean updateAccountBalance(String accountNumber, Money balanceChange) {
         entityManager.getTransaction().begin();
         Boolean result = getAccountByAccountNumber(accountNumber).map((Account account) -> {

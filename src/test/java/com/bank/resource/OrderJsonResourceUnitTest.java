@@ -1,23 +1,20 @@
 package com.bank.resource;
 
 import com.bank.BankTest;
-import com.bank.model.json.ExecutedOrder;
-import com.bank.model.json.OrderPacketHeader;
-import com.bank.model.json.PaymentOrder;
-import com.bank.model.json.RequestPaymentOrder;
+import com.bank.model.jsondb.ExecutedOrder;
+import com.bank.model.jsondb.OrderPacketHeader;
+import com.bank.model.jsondb.PaymentOrder;
+import com.bank.model.jsondb.RequestPaymentOrder;
 import com.google.common.collect.ImmutableList;
 import io.jsondb.JsonDBTemplate;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;

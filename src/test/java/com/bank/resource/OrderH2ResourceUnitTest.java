@@ -1,7 +1,6 @@
 package com.bank.resource;
 
 import com.bank.model.h2.Account;
-import org.eclipse.persistence.internal.jpa.transaction.EntityTransactionImpl;
 import org.javamoney.moneta.Money;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,7 +11,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -21,7 +19,6 @@ import static com.bank.model.h2.Account.ACCOUNT_FIND_ALL;
 import static com.bank.model.h2.Account.ACCOUNT_FIND_BY_ACCOUNT_NUMBER;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class OrderH2ResourceUnitTest {

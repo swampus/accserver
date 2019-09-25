@@ -1,4 +1,4 @@
-package com.bank.model.json;
+package com.bank.model.jsondb;
 
 import com.bank.model.ennum.OrderPriority;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,7 +7,7 @@ import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
 
 
-@Document(collection = "PaymentOrder", schemaVersion= "1.0")
+@Document(collection = "PaymentOrder", schemaVersion = "1.0")
 @JsonRootName("payment_order")
 public class PaymentOrder {
 
@@ -16,6 +16,8 @@ public class PaymentOrder {
     private String paymentOrderId;
     @JsonProperty("order_packet_header")
     private OrderPacketHeader orderPacketHeader;
+    @JsonProperty("order_position_in_packet")
+    private String orderPositionInPacket;
     @JsonProperty("account")
     private String account;
     @JsonProperty("money_amount")
@@ -44,6 +46,14 @@ public class PaymentOrder {
 
     public void setOrderPacketHeader(OrderPacketHeader orderPacketHeader) {
         this.orderPacketHeader = orderPacketHeader;
+    }
+
+    public String getOrderPositionInPacket() {
+        return orderPositionInPacket;
+    }
+
+    public void setOrderPositionInPacket(String orderPositionInPacket) {
+        this.orderPositionInPacket = orderPositionInPacket;
     }
 
     public String getAccount() {

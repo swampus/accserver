@@ -1,11 +1,11 @@
-package com.bank.model.json;
+package com.bank.model.jsondb;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
 
-@Document(collection = "PaymentOrder", schemaVersion= "1.0")
+@Document(collection = "PaymentOrder", schemaVersion = "1.0")
 @JsonRootName("request_payment_order")
 public class RequestPaymentOrder {
     @Id
