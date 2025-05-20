@@ -14,7 +14,7 @@ Unlike most Java microservices, AccServer **does not rely on Spring** or externa
 
 ## 📦 Technologies
 
-- Java 17
+- Java 8
 - Maven
 - JUnit (basic testing)
 - Pure Java threading and control
@@ -35,12 +35,6 @@ mvn exec:java -Dexec.mainClass="io.github.swampus.accserver.core.ServerRunner"
 
 > Note: adjust `exec.mainClass` if you add your own runner or test tool.
 
-## 🧠 Project Structure
-
-- `core/` — main packet handling and envelope system
-- `data/` — in-memory double-buffered data layer
-- `flow/` — processing logic simulating multi-stage flows
-- `debug/` — simple logger and debugging tool
 
 ## 📚 Motivation
 
